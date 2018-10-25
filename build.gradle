@@ -1,0 +1,21 @@
+
+dependencies {
+    compile 'org.ros.android_core:android_15:[0.3,0.4)'
+    compile 'org.ros.rosjava_messages:ar_track_alvar_msgs:0.7.+'
+    //compile 'com.github.rosjava.android_remocons:common_tools:[0.2,0.3)'
+    //compile 'org.ros.android_core:android_15:[0.3,0.4)'
+}
+
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 25
+
+    defaultConfig {
+        minSdkVersion 15
+        applicationId "org.ros.android.teleop_camera_pubsub"
+        targetSdkVersion 15
+        versionCode 1
+        versionName "1.0"
+    }
+}
