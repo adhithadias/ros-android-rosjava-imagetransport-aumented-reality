@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">teleop_camera_pubsub</string>
+    <string name="app_name">Robot Controller</string>
+    <string name="manual_activity_button">Manual Activity</string>
 </resources>

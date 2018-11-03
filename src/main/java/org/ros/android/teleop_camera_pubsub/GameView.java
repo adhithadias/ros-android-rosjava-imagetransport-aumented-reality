@@ -29,7 +29,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Nod
     private CharacterSprite characterSprite;
 
     /**
-     * variables to implemet the logic
+     * variables to implement the logic
      */
     private String message;
     private Int8 robot1message;
@@ -63,17 +63,17 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Nod
 
     static final int boxHalfWidth = 20;
     static final int pixelsPerMeter = 350; // 350 for 1280x720
-    static int pixPos1X = (int) (screenWidth/4 + pixelsPerMeter * pos1X);
-    static int pixPos1Y = (int) (screenHeight/4 + pixelsPerMeter * pos1Y);
+    static int pixPos1X = (int) (screenWidth / 4 + pixelsPerMeter * pos1X);
+    static int pixPos1Y = (int) (screenHeight / 4 + pixelsPerMeter * pos1Y);
 
-    static int pixPos2X = (int) (screenWidth/4 + pixelsPerMeter * pos2X);
-    static int pixPos2Y = (int) (screenHeight/4 + pixelsPerMeter * pos2Y);
+    static int pixPos2X = (int) (screenWidth / 4 + pixelsPerMeter * pos2X);
+    static int pixPos2Y = (int) (screenHeight / 4 + pixelsPerMeter * pos2Y);
 
     public GameView(Context context) {
 
         super(context);
 
-        getHolder().setFixedSize(screenWidth/2,screenHeight/2);
+        getHolder().setFixedSize(screenWidth / 2, screenHeight / 2);
         getHolder().addCallback(this);
 
         thread = new MainThread(getHolder(), this);
@@ -83,21 +83,21 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Nod
 
     }
 
+
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
 
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent event)
-    {
+    public boolean onTouchEvent(MotionEvent event) {
         return super.onTouchEvent(event);
     }
 
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        characterSprite = new CharacterSprite(BitmapFactory.decodeResource(getResources(),R.drawable.avdgreen));
+        characterSprite = new CharacterSprite(BitmapFactory.decodeResource(getResources(), R.drawable.avdgreen));
 
         //imageScaleThread.setRunning(true);
         //imageScaleThread.start();
@@ -117,11 +117,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Nod
                 thread.setRunning(false);
                 thread.join();
 
-        } catch(InterruptedException e){
-            e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            retry = false;
         }
-        retry = false;
-    }
     }
 
     public void update() {
@@ -130,11 +130,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Nod
     }
 
     @Override
-    public void draw(Canvas canvas)
-    {
+    public void draw(Canvas canvas) {
 
         super.draw(canvas);
-        if(canvas!=null) {
+        if (canvas != null) {
             characterSprite.draw(canvas);
 
         }
@@ -163,8 +162,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Nod
                 //int y = (int) event.getY();
 
                 // transform touch coordinates to canvas coordinates
-                touchX = (int) (event.getX()/2);
-                touchY = (int) (event.getY()/2);
+                touchX = (int) (event.getX() / 2);
+                touchY = (int) (event.getY() / 2);
 
 
                 //logger.i("TAG", "canvas: " + canvas.getWidth() + " " + canvas.getHeight() + " " + rightMargin + " " + bottomMargin);
@@ -300,6 +299,16 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Nod
     public void onError(Node node, Throwable throwable) {
 
     }
+
+//    public void onPause() {
+//        thread.setRunning(false);
+//        thread = null;
+//    }
+
+//    public void onResume() {
+//            thread.setRunning(true);
+//            thread.notify();
+//    }
 }
 
 
