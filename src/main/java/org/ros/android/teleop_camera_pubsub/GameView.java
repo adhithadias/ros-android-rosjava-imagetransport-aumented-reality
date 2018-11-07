@@ -300,15 +300,15 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Nod
 
     }
 
-//    public void onPause() {
-//        thread.setRunning(false);
+    public void onPause() {
+        thread.setRunning(false);
 //        thread = null;
-//    }
+    }
 
-//    public void onResume() {
-//            thread.setRunning(true);
+    public void onResume() {
+        thread.setRunning(true);
 //            thread.notify();
-//    }
+    }
 }
 
 

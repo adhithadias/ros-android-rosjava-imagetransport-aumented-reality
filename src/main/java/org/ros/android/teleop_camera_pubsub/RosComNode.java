@@ -129,7 +129,8 @@ public class RosComNode implements NodeMain {
         final Publisher<std_msgs.Int8> robot1CommandPublisher = connectedNode.newPublisher("/robo_1_next_block", Int8._TYPE);
         final Publisher<std_msgs.Int8> robot2CommandPublisher = connectedNode.newPublisher("/robot_2_next_block", Int8._TYPE);
 
-        Subscriber<sensor_msgs.CompressedImage> imageSubscriber = connectedNode.newSubscriber("/cv_camera/image_rect_color/compressed", sensor_msgs.CompressedImage._TYPE);
+//        Subscriber<sensor_msgs.CompressedImage> imageSubscriber = connectedNode.newSubscriber("/cv_camera/image_rect_color/compressed", sensor_msgs.CompressedImage._TYPE);
+        Subscriber<sensor_msgs.CompressedImage> imageSubscriber = connectedNode.newSubscriber("/cv_camera/image_raw/compressed", sensor_msgs.CompressedImage._TYPE);
 //        Subscriber<sensor_msgs.CompressedImage> imageSubscriber = connectedNode.newSubscriber("/cv_camera/image_resize/compressed", sensor_msgs.CompressedImage._TYPE);
 
         //Subscriber<T> imageSubscriber = connectedNode.newSubscriber("/cv_camera/image_raw/compressed", sensor_msgs.CompressedImage._TYPE);

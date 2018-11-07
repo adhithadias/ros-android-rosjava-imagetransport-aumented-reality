@@ -97,9 +97,9 @@ public class ManualActivity extends RosActivity {
 
 //    @Override
 //    protected void onResume() {
-//        Toast.makeText(ManualActivity.this, "Manual Activity onResume!", Toast.LENGTH_SHORT).show();
-//        Log.d(TAG, "onResume: Manual Activity onResume!");
-////        gameView.onResume();
+////        Toast.makeText(ManualActivity.this, "Manual Activity onResume!", Toast.LENGTH_SHORT).show();
+////        Log.d(TAG, "onResume: Manual Activity onResume!");
+//        gameView.onResume();
 //        super.onResume();
 //    }
 

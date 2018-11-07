@@ -105,8 +105,8 @@ public class CharacterSprite {
         if (GameView.markerTouched && GameView.nearestMarkerId != GameView.robot1MarkerId && GameView.nearestMarkerId != GameView.robot2MarkerId) {
             //if (markerTouched && nearestMarkerId!=robot1MarkerId && nearestMarkerId!=robot2MarkerId) {
 
-
             canvas.drawRect(GameView.touchX - GameView.boxHalfWidth, GameView.touchY - GameView.boxHalfWidth, GameView.touchX + GameView.boxHalfWidth, GameView.touchY + GameView.boxHalfWidth, paintMovingBox);
+            canvas.drawText(Integer.toString(GameView.nearestMarkerId), GameView.touchX-6, GameView.touchY+6, textPaint);
             //canvas.drawPoint(pixPos1X, pixPos1Y, paint);
             //canvas.drawPoint(pixPos2X, pixPos2Y, paint);
             if (!GameView.pos1Occupied) {

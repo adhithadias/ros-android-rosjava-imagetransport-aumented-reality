@@ -96,16 +96,24 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        configureButton();
+        configureButtons();
     }
 
-    void configureButton(){
+    void configureButtons(){
         Button manualActivityButton = (Button) findViewById(R.id.manualActivityButton);
+        Button autonomousActivityButton = (Button) findViewById(R.id.autonomousActivityButton);
 
         manualActivityButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, ManualActivity.class));
+            }
+        });
+
+        autonomousActivityButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, AutonomousActivity.class));
             }
         });
 
