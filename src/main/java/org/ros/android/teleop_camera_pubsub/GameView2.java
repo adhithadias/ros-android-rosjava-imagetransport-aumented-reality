@@ -32,8 +32,13 @@ public class GameView2 extends SurfaceView implements SurfaceHolder.Callback, No
     private static final int HEIGHT = 3;
     private static final int WIDTH = 3;
     private static final int LENGTH = 5;
+    static final int MAX_BOXES = 15;
+    static final int MAX_CYLINDERS = 5;
 
     public static Tile[][][] space = new Tile[HEIGHT][LENGTH][WIDTH];
+    public static Tile[][][] prevSpace = new Tile[HEIGHT][LENGTH][WIDTH];
+    public static int numberOfBoxesUsed = 0;
+    public static int numberOfCylindersUsed = 0;
     public static LeftSelection leftSelection = LeftSelection.DELETE;
     public static LevelSelection levelSelection = LevelSelection.LEVEL1;
     public static int selectedlevel = 0;
@@ -41,7 +46,7 @@ public class GameView2 extends SurfaceView implements SurfaceHolder.Callback, No
     public GameView2(Context context) {
         super(context);
 
-        getHolder().setFixedSize(screenWidth / 2, screenHeight / 2);
+        getHolder().setFixedSize(1280, 800);
         getHolder().addCallback(this);
 
         initializeSpace();
@@ -73,15 +78,12 @@ public class GameView2 extends SurfaceView implements SurfaceHolder.Callback, No
                 for (int k=0; k<space[0][0].length; k++){
 
                     space[i][j][k] = new Tile(50 + 50 * j + 5, 58*(2*i+1) + 150*i + 50*k + 5, BlockType.NULL);
-
-//                    space[i][j][k].setCoordinateX(50 + 50 * j);
-//                    space[i][j][k].setCoordinateY(58*(2*i+1)+150*i+50*k);
-//                    space[i][j][k].setBlockType(BlockType.NULL);
-//
-//                    System.out.println("asd: " + space[i][j][k].getCoordinateX());
+//                    prevSpace[i][j][k] = space[i][j][k];
                 }
             }
         }
+
+//        prevSpace = space;
     }
 
     @Override
@@ -110,7 +112,8 @@ public class GameView2 extends SurfaceView implements SurfaceHolder.Callback, No
                 BitmapFactory.decodeResource(getResources(), R.drawable.recycle_bin),
                 BitmapFactory.decodeResource(getResources(), R.drawable.box2),
                 BitmapFactory.decodeResource(getResources(), R.drawable.cylinder),
-                BitmapFactory.decodeResource(getResources(), R.drawable.undo2)
+                BitmapFactory.decodeResource(getResources(), R.drawable.undo2),
+                BitmapFactory.decodeResource(getResources(), R.drawable.delete_all)
                 );
 
 //        BitmapFactory.decodeRe
@@ -183,14 +186,17 @@ public class GameView2 extends SurfaceView implements SurfaceHolder.Callback, No
                         }
 
                         if(touchX>1100 && touchX<1280){
-                            if (touchY>180*0 && touchY<180*1){
+                            if (touchY>160*0 && touchY<160*1){
                                 leftSelection = LeftSelection.DELETE;
-                            }else if (touchY>180*1 && touchY<180*2){
+                            }else if (touchY>160*1 && touchY<160*2){
                                 leftSelection = LeftSelection.BOX;
-                            }else if (touchY>180*2 && touchY<180*3){
+                            }else if (touchY>160*2 && touchY<160*3){
                                 leftSelection = LeftSelection.CYLINDER;
-                            }else{
+                            }else if (touchY>160*3 && touchY<160*4){
                                 leftSelection = LeftSelection.UNDO;
+                            }else{
+                                leftSelection = LeftSelection.DELETE_ALL;
+                                clearSpace();
                             }
                         }
 
@@ -211,6 +217,8 @@ public class GameView2 extends SurfaceView implements SurfaceHolder.Callback, No
                             }
                         }
 
+                        updateUsage();
+
                         break;
                 }
 
@@ -220,6 +228,37 @@ public class GameView2 extends SurfaceView implements SurfaceHolder.Callback, No
 
         this.setOnTouchListener(onTouchListener);
 
+    }
+
+    private void updateUsage(){
+        int tempNumBoxes = 0;
+        int tempNumCylinders = 0;
+
+        for (int i=0; i<space.length; i++){
+            for (int j=0; j<space[0].length; j++){
+                for (int k=0; k<space[0][0].length; k++){
+
+                    if (space[i][j][k].getBlockType()==BlockType.BOX){
+                        tempNumBoxes++;
+                    }else if(space[i][j][k].getBlockType()==BlockType.CYLINDER){
+                        tempNumCylinders++;
+                    }
+                }
+            }
+        }
+        numberOfBoxesUsed = tempNumBoxes;
+        numberOfCylindersUsed = tempNumCylinders;
+    }
+
+    private void clearSpace(){
+        for (int i=0; i<space.length; i++){
+            for (int j=0; j<space[0].length; j++){
+                for (int k=0; k<space[0][0].length; k++){
+
+                    space[i][j][k].setBlockType(BlockType.NULL);
+                }
+            }
+        }
     }
 
     @Override

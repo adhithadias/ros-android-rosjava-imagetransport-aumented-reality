@@ -7,6 +7,11 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class CharacterSprite2 {
     private Bitmap level;
     private Bitmap constructionLevel;
@@ -16,6 +21,7 @@ public class CharacterSprite2 {
     private Bitmap cylinder;
     private Bitmap smallCylinder;
     private Bitmap undo;
+    private Bitmap deleteAll;
     private int x, y;
 
     static int screenWidth = Resources.getSystem().getDisplayMetrics().widthPixels;
@@ -25,8 +31,10 @@ public class CharacterSprite2 {
     private Paint paintBox = new Paint();
     private Paint paintWhite = new Paint();
     private Paint paintBlue = new Paint();
+    private Paint paintLargeLetters = new Paint();
+    private Paint paintExtraLargeLetters = new Paint();
 
-    public CharacterSprite2(Bitmap floor, Bitmap dustbin, Bitmap box, Bitmap cylinder, Bitmap undo) {
+    public CharacterSprite2(Bitmap floor, Bitmap dustbin, Bitmap box, Bitmap cylinder, Bitmap undo, Bitmap deleteAll) {
 
         this.level = Bitmap.createScaledBitmap(floor,250,150,true);
         this.dustbin = Bitmap.createScaledBitmap(dustbin,80,80,true);
@@ -36,6 +44,7 @@ public class CharacterSprite2 {
         this.smallBox = Bitmap.createScaledBitmap(box,30,30,true);
         this.smallCylinder = Bitmap.createScaledBitmap(cylinder,30,30,true);
         this.undo = Bitmap.createScaledBitmap(undo,80,80,true);
+        this.deleteAll = Bitmap.createScaledBitmap(deleteAll,80,80,true);
 
 //        x = screenWidth/2;
 //        y = screenHeight/2;
@@ -50,6 +59,12 @@ public class CharacterSprite2 {
         this.paintWhite.setTextSize(15);
 
         this.paintBlue.setColor(Color.GRAY);
+
+        this.paintLargeLetters.setColor(Color.WHITE);
+        this.paintLargeLetters.setTextSize(25);
+
+        this.paintExtraLargeLetters.setColor(Color.WHITE);
+        this.paintExtraLargeLetters.setTextSize(70);
 
     }
 
@@ -76,13 +91,15 @@ public class CharacterSprite2 {
         }
 
         if(GameView2.leftSelection==LeftSelection.DELETE){
-            canvas.drawRect(1100,0,1280, 180*1, paintBlue);
+            canvas.drawRect(1100,0,1280, 160*1, paintBlue);
         }else if(GameView2.leftSelection==LeftSelection.BOX){
-            canvas.drawRect(1100,180*1,1280, 180*2, paintBlue);
+            canvas.drawRect(1100,160*1,1280, 160*2, paintBlue);
         }else if(GameView2.leftSelection==LeftSelection.CYLINDER){
-            canvas.drawRect(1100,180*2,1280, 180*3, paintBlue);
-        }else {
-            canvas.drawRect(1100,180*3,1280, 800, paintBlue);
+            canvas.drawRect(1100,160*2,1280, 160*3, paintBlue);
+        }else if(GameView2.leftSelection==LeftSelection.UNDO){
+            canvas.drawRect(1100,160*3,1280, 160*4, paintBlue);
+        }else{
+            canvas.drawRect(1100,160*4,1280, 800, paintBlue);
         }
 
         canvas.drawText("Level 1", 20,30, paintWhite);
@@ -102,16 +119,23 @@ public class CharacterSprite2 {
         // construction level
         canvas.drawBitmap(constructionLevel, 475,375,null);
 
+
+        // items in the construction tab pane
+        canvas.drawBitmap(smallBox, 475,125,null);
+        canvas.drawBitmap(smallCylinder, 475,200,null);
+
         // Divide the item region
         canvas.drawLine(1100, 0, 1100, 800, paintWhite);
 
-        canvas.drawBitmap(dustbin, 1150, 50, null);
-        canvas.drawLine(1100, 180, 1280, 180, paintWhite);
-        canvas.drawBitmap(box, 1150, 230, null);
-        canvas.drawLine(1100, 180*2, 1280, 180*2, paintWhite);
-        canvas.drawBitmap(cylinder,1150, 410, null);
-        canvas.drawLine(1100, 180*3, 1280, 180*3, paintWhite);
-        canvas.drawBitmap(undo,1150, 590, null);
+        canvas.drawBitmap(dustbin, 1150, 40, null);
+        canvas.drawLine(1100, 160, 1280, 160, paintWhite);
+        canvas.drawBitmap(box, 1150, 160 + 40, null);
+        canvas.drawLine(1100, 160*2, 1280, 160*2, paintWhite);
+        canvas.drawBitmap(cylinder,1150, 160*2 + 40, null);
+        canvas.drawLine(1100, 160*3, 1280, 160*3, paintWhite);
+        canvas.drawBitmap(undo,1150, 160*3 + 40, null);
+        canvas.drawLine(1100, 160*4, 1280, 160*4, paintWhite);
+        canvas.drawBitmap(deleteAll,1150, 160*4 + 40, null);
 
     }
 
@@ -140,6 +164,21 @@ public class CharacterSprite2 {
                 }
             }
         }
+
+
+        canvas.drawText("" + (GameView2.MAX_BOXES-GameView2.numberOfBoxesUsed), 525,125+20, paintLargeLetters);
+        canvas.drawText("" + (GameView2.MAX_CYLINDERS-GameView2.numberOfCylindersUsed), 525,200+20, paintLargeLetters);
+
+        Date currentTime = Calendar.getInstance().getTime();
+        DateFormat dateFormat = new SimpleDateFormat("hh:mm:ss");
+        String strDate = dateFormat.format(currentTime);
+
+        DateFormat dateFormat2 = new SimpleDateFormat("E, MMM dd");
+        String strDate2 = dateFormat2.format(currentTime);
+
+
+        canvas.drawText(strDate, 700,150, paintExtraLargeLetters);
+        canvas.drawText(strDate2, 800,200, paintWhite);
 
     }
 }
