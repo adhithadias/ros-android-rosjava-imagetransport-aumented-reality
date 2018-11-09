@@ -42,8 +42,6 @@ public class GameView2 extends SurfaceView implements SurfaceHolder.Callback, No
 
     static int touchX;
     static int touchY;
-    private String message;
-    private ByteMultiArray structureByteMultiArray;
 
     private static final int HEIGHT = 3;
     private static final int WIDTH = 3;
@@ -63,7 +61,11 @@ public class GameView2 extends SurfaceView implements SurfaceHolder.Callback, No
     public static int selectedlevel = 0;
 
     Publisher<std_msgs.String> coordinatePublisher;
+    private String message;
     Publisher<std_msgs.ByteMultiArray> structurePublisher;
+    private ByteMultiArray structureByteMultiArray;
+    Publisher<std_msgs.String> structureStringPublisher;
+    private String structureString;
 
     public GameView2(Context context) {
         super(context);
@@ -116,6 +118,7 @@ public class GameView2 extends SurfaceView implements SurfaceHolder.Callback, No
 //        final Publisher<std_msgs.String> coordinatePublisher = connectedNode.newPublisher("/marker_coordinate", std_msgs.String._TYPE);
         coordinatePublisher = connectedNode.newPublisher("/marker_coordinate", std_msgs.String._TYPE);
         structurePublisher = connectedNode.newPublisher("/building/structure", ByteMultiArray._TYPE);
+        structureStringPublisher = connectedNode.newPublisher("/buildingStructure", String._TYPE);
 
     }
 
@@ -384,7 +387,30 @@ public class GameView2 extends SurfaceView implements SurfaceHolder.Callback, No
     }
 
     private void publishStructure() {
-        structureByteMultiArray = structurePublisher.newMessage();
+        structureString = structureStringPublisher.newMessage();
+
+        java.lang.String str = "";
+
+        for (int i=0; i<space.length; i++){
+            for (int j=0; j<space[0].length; j++){
+                for (int k=0; k<space[0][0].length; k++){
+
+                    if (space[i][j][k].getBlockType()==BlockType.BOX){
+                        str = str + "1 0 ";
+                    }else if(space[i][j][k].getBlockType()==BlockType.CYLINDER){
+                        str = str + "0 1 ";
+                    }else{
+                        str = str + "0 0 ";
+                    }
+                }
+            }
+        }
+
+        structureString.setData(str);
+        structureStringPublisher.publish(structureString);
+
+
+//        structureByteMultiArray = structurePublisher.newMessage();
 //        ChannelBuffer wrappedBuffer = wrappedBuffer(new byte[128], new byte[256]);
 //        structureByteMultiArray.setData(wrappedBuffer);
 //
@@ -402,7 +428,8 @@ public class GameView2 extends SurfaceView implements SurfaceHolder.Callback, No
 //
 //        structureByteMultiArray.setData(buffers);
 //
-        structurePublisher.publish(structureByteMultiArray);
+//        structurePublisher.publish(structureByteMultiArray);
+
     }
 
     private void updateUsage(){
