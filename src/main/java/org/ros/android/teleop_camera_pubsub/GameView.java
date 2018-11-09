@@ -73,7 +73,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Nod
 
         super(context);
 
-        getHolder().setFixedSize(screenWidth / 2, screenHeight / 2);
+        getHolder().setFixedSize(1280, 800);
         getHolder().addCallback(this);
 
         thread = new MainThread(getHolder(), this);
@@ -162,8 +162,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Nod
                 //int y = (int) event.getY();
 
                 // transform touch coordinates to canvas coordinates
-                touchX = (int) (event.getX() / 2);
-                touchY = (int) (event.getY() / 2);
+                touchX = (int) (event.getX() / screenWidth * 1280);
+                touchY = (int) (event.getY() / screenHeight * 800);
 
 
                 //logger.i("TAG", "canvas: " + canvas.getWidth() + " " + canvas.getHeight() + " " + rightMargin + " " + bottomMargin);

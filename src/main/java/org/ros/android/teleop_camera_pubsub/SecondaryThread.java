@@ -8,7 +8,7 @@ public class SecondaryThread extends Thread {
     private SurfaceHolder surfaceHolder;
     private boolean running;
     public static Canvas canvas;
-    private int targetFPS = 30;
+    private int targetFPS = 15;
     private double averageFPS;
 
     public SecondaryThread(SurfaceHolder surfaceHolder, GameView2 gameView2) {
@@ -65,7 +65,7 @@ public class SecondaryThread extends Thread {
                 averageFPS = 1000/((totalTime/frameCount)/1000000);
                 frameCount =0;
                 totalTime = 0;
-//                System.out.println(averageFPS);
+                System.out.println(averageFPS);
             }
         }
 

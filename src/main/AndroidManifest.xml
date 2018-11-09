@@ -27,7 +27,7 @@
         </activity>
         <activity
             android:name="org.ros.android.MasterChooser"
-            android:screenOrientation="landscape"></activity>
+            android:screenOrientation="landscape" />
 
         <service android:name="org.ros.android.NodeMainExecutorService">
             <intent-filter>
@@ -37,8 +37,15 @@
 
         <activity
             android:name=".ManualActivity"
-            android:screenOrientation="landscape"></activity>
-        <activity android:name=".AutonomousActivity"></activity>
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".AutonomousActivity"
+            android:screenOrientation="landscape"/>
+        <activity
+            android:name=".HelpActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppTheme.CustomTheme">
+        </activity>
     </application>
 
 </manifest>
